@@ -1,8 +1,8 @@
 package com.packt.JavaDL.TitanicSurvival;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import com.packt.JavaDL.TitanicSurvival.Util.SparkSessionUtil;
+import com.packt.JavaDL.TitanicSurvival.Util.Util;
+import com.packt.JavaDL.TitanicSurvival.Util.Util.VectorPair;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.ml.classification.MultilayerPerceptronClassificationModel;
 import org.apache.spark.ml.classification.MultilayerPerceptronClassifier;
@@ -12,15 +12,10 @@ import org.apache.spark.mllib.linalg.Vector;
 import org.apache.spark.mllib.linalg.Vectors;
 import org.apache.spark.mllib.stat.MultivariateStatisticalSummary;
 import org.apache.spark.mllib.util.MLUtils;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Encoder;
-import org.apache.spark.sql.Encoders;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.*;
 
-import com.packt.JavaDL.TitanicSurvival.Util.SparkSessionUtil;
-import com.packt.JavaDL.TitanicSurvival.Util.Util;
-import com.packt.JavaDL.TitanicSurvival.Util.Util.VectorPair;
+import java.util.HashMap;
+import java.util.Map;
 
 public class SurvivalPredictionMLP {
 	
@@ -142,6 +137,7 @@ public class SurvivalPredictionMLP {
 
         Dataset<Row> resultDF = model.transform(finalTestDF).select("PassengerId", "prediction");  
         resultDF.show();
+        Util.deleteResultFolder();
         resultDF.write().format("com.databricks.spark.csv").option("header", true).save("result/result.csv");
     }
 }

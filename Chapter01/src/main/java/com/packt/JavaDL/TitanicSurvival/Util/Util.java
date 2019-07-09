@@ -1,10 +1,6 @@
 package com.packt.JavaDL.TitanicSurvival.Util;
 
-import static org.apache.spark.sql.functions.callUDF;
-import static org.apache.spark.sql.functions.col;
-
-import java.io.Serializable;
-
+import org.apache.commons.io.FileUtils;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.mllib.feature.StandardScalerModel;
 import org.apache.spark.mllib.linalg.Vector;
@@ -16,11 +12,17 @@ import org.apache.spark.sql.Row;
 import org.apache.spark.sql.SparkSession;
 import org.apache.spark.sql.api.java.UDF1;
 import org.apache.spark.sql.types.DataTypes;
-
 import scala.Option;
 import scala.Some;
 import scala.Tuple2;
 import scala.Tuple3;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.Serializable;
+
+import static org.apache.spark.sql.functions.callUDF;
+import static org.apache.spark.sql.functions.col;
 
 public class Util {
 	@SuppressWarnings("serial")
@@ -228,5 +230,14 @@ public class Util {
                 col("SibSp"),
                 callUDF("normEmbarked", col("Embarked")).alias("Embarked"));
     }
+
+    public static void deleteResultFolder() {
+        try {
+            FileUtils.deleteDirectory(new File("result"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
 }
 
