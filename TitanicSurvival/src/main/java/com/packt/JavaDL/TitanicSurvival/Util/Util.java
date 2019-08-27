@@ -141,7 +141,7 @@ public class Util {
 
     public static MultivariateStatisticalSummary summary = null;
 
-    public static SparkSession spark = SparkSessionUtil.getInstance();
+    public static SparkSession spark = com.packt.JavaDL.TitanicSurvival.Util.SparkSessionUtil.getInstance();
 
     public static Dataset<Row> getTrainingDF() {
         spark.sqlContext().udf().register("normSex", normSex, DataTypes.IntegerType);

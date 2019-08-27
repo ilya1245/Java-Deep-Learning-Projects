@@ -60,7 +60,7 @@ public class DataSetCreator {
                 .format("com.databricks.spark.csv")
                 .option("header", "true") // Use first line of all files as header
                 .option("inferSchema", "true") // Automatically infer data types
-                .load("data/train.csv");
+                .load("data/Titanic_train.csv");
 		df.show();
         
         Dataset<Row> df2 = df.select(col("Survived").cast(DataTypes.IntegerType),
@@ -94,7 +94,7 @@ public class DataSetCreator {
 	    Dataset<Row> trainingData = splits[0];
 	    Dataset<Row> testData = splits[1];
 	    
-	    trainingData.coalesce(1).write().format("com.databricks.spark.csv").option("header", "false").option("delimiter", ",").save("data/Titanic_Train.csv");
-	    testData.coalesce(1).write().format("com.databricks.spark.csv").option("header", "false").option("delimiter", ",").save("data/Titanic_Test.csv");
+	    trainingData.coalesce(1).write().format("com.databricks.spark.csv").option("header", "false").option("delimiter", ",").save("data/Titanic_Train_w.csv");
+	    testData.coalesce(1).write().format("com.databricks.spark.csv").option("header", "false").option("delimiter", ",").save("data/Titanic_Test_w.csv");
     }
 }
